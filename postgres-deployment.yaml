@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-db
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+      - name: postgres-db
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-data
+        env:
+        # the subfolder `postgres` is used because a mounted disk has lost+found on the root
+        # and postgres needs an empty folder.
+        - name: PGDATA
+          value: /var/lib/postgresql/data/postgres/
+        - name: POSTGRES_DB
+          value: yawn
+        - name: POSTGRES_USER
+          value: yawn
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: POSTGRES_PASSWORD
+      volumes:
+      - name: postgres-data
+        gcePersistentDisk:
+          pdName: postgres-data
+          fsType: ext4

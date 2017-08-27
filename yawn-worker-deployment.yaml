@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: yawn-worker
+spec:
+  replicas: 5
+  template:
+    spec:
+      containers:
+      - name: yawn-worker
+        image: quay.io/aclowes/yawn:latest
+        command: ["yawn", "worker"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: DATABASE_URL
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: SECRET_KEY

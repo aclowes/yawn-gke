@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: yawn-webserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: yawn-webserver
+    spec:
+      containers:
+      - name: yawn-webserver
+        image: quay.io/aclowes/yawn:latest
+        command: ["yawn", "webserver"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: DATABASE_URL
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: SECRET_KEY
+        ports:
+        - containerPort: 80
