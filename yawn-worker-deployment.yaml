@@ -3,13 +3,15 @@ kind: Deployment
 metadata:
   name: yawn-worker
 spec:
-  replicas: 5
+  replicas: 3
   template:
     spec:
       containers:
       - name: yawn-worker
-        image: quay.io/aclowes/yawn:latest
+        image: quay.io/aclowes/yawn-gke:latest
         command: ["yawn", "worker"]
+        ports:
+        - containerPort: 8000
         env:
         - name: DATABASE_URL
           valueFrom:

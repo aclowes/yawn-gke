@@ -13,3 +13,5 @@ WORKDIR /opt/yawn
 COPY yawn_settings.py /opt/yawn/
 
 CMD ["yawn"]
+
+EXPOSE 8000

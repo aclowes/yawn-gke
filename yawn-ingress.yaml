@@ -4,7 +4,7 @@ metadata:
   name: yawn-ingress
 spec:
   tls:
-    - secretName: ingress-secrets
+    - secretName: yawn-secrets
   backend:
     serviceName: yawn-webserver
-    servicePort: 80
+    servicePort: 8000

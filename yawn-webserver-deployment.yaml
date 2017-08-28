@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: yawn-webserver
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: yawn-webserver
-        image: quay.io/aclowes/yawn:latest
+        image: quay.io/aclowes/yawn-gke:latest
         command: ["yawn", "webserver"]
         env:
         - name: DATABASE_URL
@@ -25,4 +25,4 @@ spec:
               name: yawn-secrets
               key: SECRET_KEY
         ports:
-        - containerPort: 80
+        - containerPort: 8000
