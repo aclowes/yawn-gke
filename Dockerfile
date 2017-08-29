@@ -1,8 +1,5 @@
 FROM python:3.6-jessie
 
-ARG SECRET_KEY
-ARG DATABASE_URL
-
 ENV DJANGO_SETTINGS_MODULE=yawn_settings
 ENV PYTHONPATH=/opt/yawn
 
