@@ -1,5 +1,8 @@
 # YAWN on GKE
 
+[![Docker Repository on Quay](https://quay.io/repository/aclowes/yawn-gke/status 
+"Docker Repository on Quay")](https://quay.io/repository/aclowes/yawn-gke)
+
 This tutorial is describes setting up a [Google Container Engine
 ](https://cloud.google.com/container-engine/) (GKE) cluster running 
 [YAWN](github.com/aclowes/yawn), a workflow engine written in Python.

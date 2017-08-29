@@ -14,6 +14,8 @@ spec:
         image: quay.io/aclowes/yawn-gke:latest
         command: ["yawn", "webserver"]
         env:
+        - name: GUNICORN_CMD_ARGS
+          value: "-b 0.0.0.0:8000"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
