@@ -17,6 +17,8 @@ spec:
         env:
         - name: GUNICORN_CMD_ARGS
           value: "-b 0.0.0.0:8000 --access-logformat '%(h)s %(l)s %(u)s %(t)s \"%(r)s\" %(s)s %(b)s \"%(f)s\" \"%(a)s\" %({Host}i)s %({X-Forwarded-Proto}i)s'"
+        - name: ALLOWED_HOSTS
+          value: "yawn.live"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
