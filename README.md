@@ -32,10 +32,19 @@ can follow these steps.
     kubectl get service
     kubectl get service yawn-webserver -o yaml  # show as yaml
     kubectl describe pod postgres-db
-    
     kubectl replace -f yawn-webserver-deployment.yaml
-    
     kubectl scale deployment yawn-webserver --replicas=2 
+    
+    # run the migrations
+    kubectl get pods 
+    kubectl exec <pod name> -- yawn migrate
+    
+    # view container logs
+    kubectl logs yawn-webserver-421291050-jz04j
+    
+    # ssh into a node
+    kubectl get nodes
+    gcloud compute ssh <node>
 
 To easily get a free SSL certificate:
 

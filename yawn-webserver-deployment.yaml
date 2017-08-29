@@ -12,10 +12,11 @@ spec:
       containers:
       - name: yawn-webserver
         image: quay.io/aclowes/yawn-gke:latest
+        # TODO run migrations on startup
         command: ["yawn", "webserver"]
         env:
         - name: GUNICORN_CMD_ARGS
-          value: "-b 0.0.0.0:8000"
+          value: "-b 0.0.0.0:8000 --access-logformat '%(h)s %(l)s %(u)s %(t)s \"%(r)s\" %(s)s %(b)s \"%(f)s\" \"%(a)s\" %({Host}i)s %({X-Forwarded-Proto}i)s'"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
