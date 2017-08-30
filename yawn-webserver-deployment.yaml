@@ -18,7 +18,7 @@ spec:
         - name: GUNICORN_CMD_ARGS
           value: "-b 0.0.0.0:8000 --access-logformat '%(h)s %(l)s %(u)s %(t)s \"%(r)s\" %(s)s %(b)s \"%(f)s\" \"%(a)s\" %({Host}i)s %({X-Forwarded-Proto}i)s'"
         - name: ALLOWED_HOSTS
-          value: "yawn.live"
+          value: ".yawn.live"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
@@ -31,3 +31,11 @@ spec:
               key: SECRET_KEY
         ports:
         - containerPort: 8000
+        # use a custom health check to specify the endpoint;
+        # note that you cannot set SSL forwarding headers with an ingress
+        # however you can set the host header in the website:
+        #   https://console.cloud.google.com/compute/healthChecks
+        readinessProbe:
+          httpGet:
+            path: /api/healthy/
+            port: 8000
