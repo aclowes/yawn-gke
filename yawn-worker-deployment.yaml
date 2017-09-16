@@ -3,8 +3,11 @@ kind: Deployment
 metadata:
   name: yawn-worker
 spec:
-  replicas: 3
+  replicas: 2
   template:
+    metadata:
+      labels:
+        app: yawn-worker
     spec:
       containers:
       - name: yawn-worker
@@ -13,6 +16,8 @@ spec:
         ports:
         - containerPort: 8000
         env:
+        - name: ALLOWED_HOSTS
+          value: ".yawn.live"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:

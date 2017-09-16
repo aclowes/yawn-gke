@@ -31,11 +31,3 @@ spec:
               key: SECRET_KEY
         ports:
         - containerPort: 8000
-        # use a custom health check to specify the endpoint;
-        # note that you cannot set SSL forwarding headers with an ingress
-        # however you can set the host header in the website:
-        #   https://console.cloud.google.com/compute/healthChecks
-        readinessProbe:
-          httpGet:
-            path: /api/healthy/
-            port: 8000

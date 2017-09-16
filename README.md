@@ -20,6 +20,10 @@ can follow these steps.
     
     # create a persistent SSD disk for postgres
     gcloud compute disks create --size=10GB --type=pd-ssd postgres-data
+  
+    # create a secrets file and fill in the secrets
+    cp secrets-template.yaml secrets.yaml
+    kubectl create -f secrets.yaml
     
     # create the yawn resources
     kubectl create -f postgres-db-deployment.yaml
@@ -28,23 +32,35 @@ can follow these steps.
     kubectl create -f yawn-webserver-service.yaml
     kubectl create -f yawn-worker-deployment.yaml
     
+    # run the migrations - pick any pod to run them on
+    kubectl get pods 
+    kubectl exec <pod name> -- yawn migrate
+
+There are a few manual steps to get the load balancer health check working. 
+Go to the [Health Checks] and select the health check with path '/' (the other
+check is for the kubernetes admin website). Edit it, and change the path to 
+'/api/healthy/' and the host to your domain name, here 'yawn.live'. The health
+check endpoint is exempt from SSL redirection, but it must have a host header in
+Django's ALLOWED_HOSTS setting.
+
+[Health Checks]: https://console.cloud.google.com/compute/healthChecks?project=wise-vim-178017
+    
     # actions on services, pods, secrets, etc
     kubectl get service
     kubectl get service yawn-webserver -o yaml  # show as yaml
     kubectl describe pod postgres-db
     kubectl replace -f yawn-webserver-deployment.yaml
     kubectl scale deployment yawn-webserver --replicas=2 
-    
-    # run the migrations
-    kubectl get pods 
-    kubectl exec <pod name> -- yawn migrate
-    
+        
     # view container logs
     kubectl logs yawn-webserver-421291050-jz04j
     
     # ssh into a node
     kubectl get nodes
     gcloud compute ssh <node>
+    
+    # exec in a running pod
+    kubectl exec -it <pod name> bash
 
 To easily get a free SSL certificate:
 
