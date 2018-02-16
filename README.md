@@ -5,7 +5,7 @@
 
 This tutorial is describes setting up a [Google Container Engine
 ](https://cloud.google.com/container-engine/) (GKE) cluster running 
-[YAWN](github.com/aclowes/yawn), a workflow engine written in Python.
+[YAWN](https://github.com/aclowes/yawn), a workflow engine written in Python.
 
 ### Setting up a Kubernetes cluster on Google Cloud
 
@@ -61,6 +61,9 @@ Django's ALLOWED_HOSTS setting.
     
     # exec in a running pod
     kubectl exec -it <pod name> bash
+    
+    # access the admin GUI at http://127.0.0.1:8001/ui/
+    kubectl proxy
 
 To easily get a free SSL certificate:
 
@@ -71,12 +74,24 @@ To easily get a free SSL certificate:
     # created by your ingress in the section 'Custom resource records'
     https://domains.google.com/registrar
 
-    # Name              Type   Data
-    # _acme-challenge   TXT    <token from certbot>
-    
     # Install the Let’s Encrypt agent 'certbot' and request a cert
     brew install certbot
     sudo certbot certonly --manual --preferred-challenges dns -d yawn.live
+
+    # Make a TXT DNS record as directed by the tool, and wait a few minutes to propogate
+    # Name              Type   Data
+    # _acme-challenge   TXT    <token from certbot>
+
+    # Update the secrets.yaml file with the new base64 encoded chain and key
+    sudo base64 /etc/letsencrypt/live/yawn.live/fullchain.pem | pbcopy
+    sudo base64 /etc/letsencrypt/live/yawn.live/privkey.pem | pbcopy
+
+    # Then restart the ingress
+    kubectl replace --force -f secrets.yaml
+    kubectl replace --force -f yawn-ingress.yaml
+
+    # Maybe fix the load balancer by adding the path and host per above instructions.
+    # Check the SSL cert in chrome using an incognito window, it seems to cache.
     
 Another good resource is the [kubectl cheatsheet](
 https://kubernetes.io/docs/user-guide/kubectl-cheatsheet/).
