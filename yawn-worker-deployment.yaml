@@ -15,9 +15,20 @@ spec:
         command: ["yawn", "worker"]
         ports:
         - containerPort: 8000
+        volumeMounts:
+        - name: credentials-volume
+          mountPath: /etc/credentials
+          readOnly: true
+        volumes:
+        - name: credentials-volume
+          secret:
+            secretName: yawn-secrets
+            items:
+            - key: gcp.json
+              path: gcp.json
         env:
-        - name: ALLOWED_HOSTS
-          value: ".yawn.live"
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/credentials/gcp.json
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
