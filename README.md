@@ -92,6 +92,13 @@ To easily get a free SSL certificate:
 
     # Maybe fix the load balancer by adding the path and host per above instructions.
     # Check the SSL cert in chrome using an incognito window, it seems to cache.
+    # View it here https://console.cloud.google.com/net-services/loadbalancing/advanced/sslCertificates/list
     
 Another good resource is the [kubectl cheatsheet](
 https://kubernetes.io/docs/user-guide/kubectl-cheatsheet/).
+
+This site serves static files created by the tasks directly from google cloud
+storage.
+
+    gsutil mb gs://static.yawn.live
+    gsutil web set -m index.html -e 404.html gs://static.yawn.live

@@ -19,13 +19,6 @@ spec:
         - name: credentials-volume
           mountPath: /etc/credentials
           readOnly: true
-        volumes:
-        - name: credentials-volume
-          secret:
-            secretName: yawn-secrets
-            items:
-            - key: gcp.json
-              path: gcp.json
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/credentials/gcp.json
@@ -39,3 +32,10 @@ spec:
             secretKeyRef:
               name: yawn-secrets
               key: SECRET_KEY
+      volumes:
+      - name: credentials-volume
+        secret:
+          secretName: yawn-secrets
+          items:
+          - key: gcp.json
+            path: gcp.json
