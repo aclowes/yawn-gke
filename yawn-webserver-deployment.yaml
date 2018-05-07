@@ -19,6 +19,10 @@ spec:
           value: "-b 0.0.0.0:8000 --access-logformat '%(h)s %(l)s %(u)s %(t)s \"%(r)s\" %(s)s %(b)s \"%(f)s\" \"%(a)s\" %({Host}i)s %({X-Forwarded-Proto}i)s'"
         - name: ALLOWED_HOSTS
           value: ".yawn.live"
+        - name: KUBERNETES_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:

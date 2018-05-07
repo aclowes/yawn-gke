@@ -1,4 +1,5 @@
 import dj_database_url
+import pkg_resources
 
 from yawn.settings.base import *
 
@@ -14,3 +15,17 @@ ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
 REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 ]
+
+INSTALLED_APPS += ['raven.contrib.django.raven_compat']
+
+try:
+    yawn_version = pkg_resources.require("yawns")[0].version
+except:
+    yawn_version = None
+
+RAVEN_CONFIG = {
+    'dsn': os.environ.get('SENTRY_DSN'),
+    'release': yawn_version,
+    'name': os.environ.get('KUBERNETES_POD_NAME'),
+    'include_paths': ['yawn'],
+}
