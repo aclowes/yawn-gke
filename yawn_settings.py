@@ -16,7 +16,7 @@ REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 ]
 
-INSTALLED_APPS += ['raven.contrib.django.raven_compat']
+INSTALLED_APPS += ['raven.contrib.django']
 
 try:
     yawn_version = pkg_resources.require("yawns")[0].version
