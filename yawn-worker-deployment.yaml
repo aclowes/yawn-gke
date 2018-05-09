@@ -13,8 +13,13 @@ spec:
       - name: yawn-worker
         image: quay.io/aclowes/yawn-gke:latest
         command: ["yawn", "worker"]
-        ports:
-        - containerPort: 8000
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 0m
+            memory: 100M
         volumeMounts:
         - name: credentials-volume
           mountPath: /etc/credentials
@@ -36,6 +41,11 @@ spec:
             secretKeyRef:
               name: yawn-secrets
               key: SECRET_KEY
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              name: yawn-secrets
+              key: SENTRY_DSN
       volumes:
       - name: credentials-volume
         secret:
