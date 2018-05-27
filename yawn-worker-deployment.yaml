@@ -12,11 +12,11 @@ spec:
       containers:
       - name: yawn-worker
         image: quay.io/aclowes/yawn-gke:latest
-        command: ["yawn", "worker"]
+        args: ["yawn", "worker"]
         resources:
           limits:
             cpu: 500m
-            memory: 512M
+            memory: 768M
           requests:
             cpu: 0m
             memory: 100M
