@@ -1,0 +1,4 @@
+https://yawn.live/
+http://static.yawn.live/github-activity-board/django/
+http://static.yawn.live/github-activity-board/kubernetes/
+http://static.yawn.live/snowy/

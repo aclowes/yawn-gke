@@ -15,4 +15,8 @@ WORKDIR /opt/yawn
 
 COPY yawn_settings.py /opt/yawn/
 
+# hack to serve these on https://yawn.live
+COPY robots.txt /usr/local/lib/python3.6/site-packages/yawn/staticfiles/
+COPY sitemap.txt /usr/local/lib/python3.6/site-packages/yawn/staticfiles/
+
 CMD ["yawn"]
