@@ -72,7 +72,6 @@ To easily get a free SSL certificate:
     
     # Once registered, add an 'A' record pointing to the IP address
     # created by your ingress in the section 'Custom resource records'
-    https://domains.google.com/registrar
 
     # Install the Let’s Encrypt agent 'certbot' and request a cert
     brew install certbot
@@ -90,9 +89,11 @@ To easily get a free SSL certificate:
     kubectl replace --force -f secrets.yaml
     kubectl replace --force -f yawn-ingress.yaml
 
-    # Maybe fix the load balancer by adding the path and host per above instructions.
-    # Check the SSL cert in chrome using an incognito window, it seems to cache.
-    # View it here https://console.cloud.google.com/net-services/loadbalancing/advanced/sslCertificates/list
+    # Check that the new certificate is being used after a few inutes:
+    curl -v https://yawn.live 2>&1 | grep expire
+    
+    # If the yawn-webserver pods are showing as unhealthy, fix the 
+    # healthcheck per the above instructions.
     
 Another good resource is the [kubectl cheatsheet](
 https://kubernetes.io/docs/user-guide/kubectl-cheatsheet/).
