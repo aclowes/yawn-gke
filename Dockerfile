@@ -9,7 +9,7 @@ ENTRYPOINT ["/tini", "--"]
 ENV DJANGO_SETTINGS_MODULE=yawn_settings
 ENV PYTHONPATH=/opt/yawn
 
-RUN pip install yawns dj-database-url raven
+RUN pip install yawns==0.2.7 dj-database-url raven
 
 WORKDIR /opt/yawn
 
