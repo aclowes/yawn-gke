@@ -1,0 +1,93 @@
+version: '3.1'
+
+services:
+  webserver:
+    image: quay.io/aclowes/yawn-gke:latest
+    command: ["yawn", "webserver"]
+    environment:
+      # secrets come from .env
+      SENTRY_DSN:
+      SECRET_KEY:
+      DATABASE_URL:
+      GUNICORN_CMD_ARGS: "-b 0.0.0.0:8000 --access-logformat '%(h)s %(l)s %(u)s %(t)s \"%(r)s\" %(s)s %(b)s \"%(f)s\" \"%(a)s\" %({Host}i)s %({X-Forwarded-Proto}i)s'"
+      ALLOWED_HOSTS: ".yawn.live"
+      VIRTUAL_HOST: yawn.live
+      VIRTUAL_PORT: 8000
+      LETSENCRYPT_HOST: yawn.live
+      # KUBERNETES_POD_NAME is sent to sentry, map it?
+    depends_on:
+      - postgres
+    expose:
+    - 8000
+
+  worker:
+    image: quay.io/aclowes/yawn-gke:latest
+    command: ["yawn", "worker"]
+    environment:
+      # secrets come from .env
+      SENTRY_DSN:
+      GITHUB_TOKEN:
+      SECRET_KEY:
+      DATABASE_URL:
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp.json
+      # KUBERNETES_POD_NAME is sent to sentry, map it from HOSTNAME?
+    secrets:
+      - gcp.json
+    depends_on:
+      - postgres
+    expose:
+    - 8000
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      # secrets come from .env
+      POSTGRES_PASSWORD:
+      POSTGRES_DB: yawn
+      POSTGRES_USER: yawn
+      POSTGRES_USER: yawn
+    expose:
+    - 5432
+    volumes:
+    - /mnt/stateful_partition/postgres:/var/lib/postgresql/data
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "80:80"
+      - "443:443"
+
+  letsencrypt:
+    container_name: letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    environment:
+      DEFAULT_EMAIL: aclowes@gmail.com
+      NGINX_PROXY_CONTAINER: nginx-proxy
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+secrets:
+  gcp.json:
+    # manually pasted in sudo vi /mnt/stateful_partition/gcp.json
+    # ignore the 'undefined secret file' warning, it is false
+    file: /mnt/stateful_partition/gcp.json
+
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:

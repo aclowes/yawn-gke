@@ -1,4 +1,6 @@
 secrets.yaml
+.env
+gcp.json
 
 # pycharm
 .idea/
