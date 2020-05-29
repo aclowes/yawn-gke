@@ -28,11 +28,15 @@ services:
     environment:
       # secrets come from .env
       SENTRY_DSN:
-      GITHUB_TOKEN:
       SECRET_KEY:
       DATABASE_URL:
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp.json
-      # KUBERNETES_POD_NAME is sent to sentry, map it from HOSTNAME?
+      LUX_USERNAME:
+      LUX_PASSWORD:
+      LUX_THERMOSTATS:
+      SCE_USERNAME:
+      SCE_PASSWORD:
+      SCE_ACCOUNTS:
     secrets:
       - gcp.json
     depends_on:
