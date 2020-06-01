@@ -37,6 +37,7 @@ services:
       SCE_USERNAME:
       SCE_PASSWORD:
       SCE_ACCOUNTS:
+      GITHUB_TOKEN:
     secrets:
       - gcp.json
     depends_on:
