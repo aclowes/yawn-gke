@@ -31,8 +31,7 @@ services:
       SECRET_KEY:
       DATABASE_URL:
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp.json
-      LUX_USERNAME:
-      LUX_PASSWORD:
+      LUX_TOKEN:
       LUX_THERMOSTATS:
       SCE_USERNAME:
       SCE_PASSWORD:
