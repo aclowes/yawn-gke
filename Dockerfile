@@ -1,7 +1,7 @@
-FROM python:3.6-jessie
+FROM python:3.10-slim-buster
 
 # tini is used to reap orphaned processes, i.e. when a worker kills a process group
-ENV TINI_VERSION v0.18.0
+ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
