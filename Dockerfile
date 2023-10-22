@@ -1,4 +1,4 @@
-FROM python:3.10-buster
+FROM python:3.10-bullseye
 
 # tini is used to reap orphaned processes, i.e. when a worker kills a process group
 ENV TINI_VERSION v0.19.0
