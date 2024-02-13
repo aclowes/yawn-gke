@@ -41,8 +41,6 @@ services:
       - gcp.json
     depends_on:
       - postgres
-    expose:
-      - 8000
     logging:
       driver: gcplogs
 
