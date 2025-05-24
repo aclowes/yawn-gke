@@ -20,5 +20,5 @@ curl -v --resolve yawn.live:8000:127.0.0.1 yawn.live:8000
 
 # delete the worker to free space
 docker-compose stop worker
-docker-compose rm worker
+docker-compose rm -f worker
 docker-compose up -d worker
