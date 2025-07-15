@@ -88,6 +88,22 @@ services:
     logging:
       driver: gcplogs
 
+  chatbot:
+    build: chatbot
+    security_opt:
+      - seccomp=unconfined
+    environment:
+      # secrets come from .env
+      OPENAI_API_KEY:
+      GRADIO_SERVER_NAME: 0.0.0.0
+      VIRTUAL_HOST: chat.bevibenewine.com
+      VIRTUAL_PORT: 7860
+      LETSENCRYPT_HOST: chat.bevibenewine.com
+    expose:
+      - 7860
+    logging:
+      driver: gcplogs
+
 secrets:
   gcp.json:
     # manually pasted in sudo vi /mnt/stateful_partition/gcp.json
