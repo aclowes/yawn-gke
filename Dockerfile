@@ -12,7 +12,6 @@ ENV PYTHONPATH=/opt/yawn
 RUN pip install yawns==0.3.1 dj-database-url raven
 
 WORKDIR /opt/yawn
-
 COPY yawn_settings.py /opt/yawn/
 
 # hack to serve these on https://yawn.live
