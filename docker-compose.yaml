@@ -102,7 +102,7 @@ services:
     expose:
       - 7860
     logging:
-      driver: gcplogs
+      driver: gcplogs  # not working for some reason
 
 secrets:
   gcp.json:

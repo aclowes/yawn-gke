@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye
+FROM python:3.12
 
 # tini is used to reap orphaned processes, i.e. when a worker kills a process group
 ENV TINI_VERSION v0.19.0
@@ -9,7 +9,7 @@ ENTRYPOINT ["/tini", "--"]
 ENV DJANGO_SETTINGS_MODULE=yawn_settings
 ENV PYTHONPATH=/opt/yawn
 
-RUN pip install yawns==0.2.9 dj-database-url raven
+RUN pip install yawns==0.3.1 dj-database-url raven
 
 WORKDIR /opt/yawn
 

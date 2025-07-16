@@ -16,8 +16,6 @@ client = OpenAI(
 )
 
 
-# TODO set cookies https://nickyreinert.medium.com/how-to-achieve-persistence-in-a-gradio-app-c3612084b5e2
-
 def predict(message, history):
     print(f"User input: {message}")
     response = client.responses.create(
