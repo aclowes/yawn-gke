@@ -1,4 +1,7 @@
+# gke
 secrets.yaml
+
+# docker-compose
 .env
 gcp.json
 
