@@ -1,5 +1,5 @@
 import dj_database_url
-import pkg_resources
+from importlib.metadata import version
 
 from yawn.settings.base import *
 
@@ -18,14 +18,9 @@ REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
 
 INSTALLED_APPS += ['raven.contrib.django']
 
-try:
-    yawn_version = pkg_resources.require("yawns")[0].version
-except:
-    yawn_version = None
-
 RAVEN_CONFIG = {
     'dsn': os.environ.get('SENTRY_DSN'),
-    'release': yawn_version,
+    'release': version("yawns"),
     'name': os.environ.get('KUBERNETES_POD_NAME'),
     'include_paths': ['yawn'],
 }
