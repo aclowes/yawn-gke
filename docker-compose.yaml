@@ -1,6 +1,6 @@
 services:
   webserver:
-    image: quay.io/aclowes/yawn-gke:latest
+    image: quay.io/aclowes/yawn:latest
     command: ["yawn", "webserver"]
     environment:
       # secrets come from .env
@@ -21,7 +21,7 @@ services:
       driver: gcplogs
 
   worker:
-    image: quay.io/aclowes/yawn-gke:latest
+    image: quay.io/aclowes/yawn:latest
     command: ["yawn", "worker"]
     environment:
       # secrets come from .env
