@@ -39,7 +39,7 @@ demo = gradio.ChatInterface(
     save_history=True,
     cache_examples=True,
     cache_mode="lazy",
-    title="Welcome to Bevi Bene's Sommelier Chatbot"
+    title="Bevi Bene Chatbot Sommelier"
 )
 
 demo.launch()

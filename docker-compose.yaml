@@ -43,7 +43,9 @@ services:
       driver: gcplogs
 
   postgres:
-    image: postgres:11
+    image: postgres:16
+    security_opt:
+      - seccomp=unconfined
     environment:
       # secrets come from .env
       POSTGRES_PASSWORD:
